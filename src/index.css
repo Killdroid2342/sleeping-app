@@ -4,8 +4,6 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #111;
-  color: white;
 }
 
 .background {
@@ -13,7 +11,11 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 }
-
+.backgroundForm {
+  background-image: url('./assets/img/FormB.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
