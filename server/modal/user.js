@@ -7,5 +7,5 @@ const conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'ecommerce',
+  database: 'sleep-tracker',
 });
