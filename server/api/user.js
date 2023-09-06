@@ -4,3 +4,5 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 router.use(bodyParser.json());
+
+module.exports = router;
