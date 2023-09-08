@@ -48,15 +48,9 @@ function Nav() {
           </li>
           <li
             className='mt-5 text-white text-center cursor-pointer'
-            onClick={() => navigate('/Schedule')}
+            onClick={() => navigate('/alarmclock')}
           >
-            Schedule
-          </li>
-          <li
-            className='mt-5 text-white text-center cursor-pointer'
-            onClick={() => navigate('/Progress')}
-          >
-            Progress
+            Alarm Clock
           </li>
           <li
             className='mt-5 text-white text-center cursor-pointer'
