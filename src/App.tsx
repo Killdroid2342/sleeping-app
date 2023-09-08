@@ -2,8 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import ErrorPage from './pages/ErrorPage';
 import Sleep from './pages/Sleep';
-import Schedule from './pages/Schedule';
-import Progress from './pages/Progress';
+import AlarmClock from './pages/AlarmClock';
 
 const router = createBrowserRouter([
   {
@@ -15,12 +14,8 @@ const router = createBrowserRouter([
     element: <Sleep />,
   },
   {
-    path: '/Schedule',
-    element: <Schedule />,
-  },
-  {
-    path: '/Progress',
-    element: <Progress />,
+    path: '/alarmclock',
+    element: <AlarmClock />,
   },
   {
     path: '*',
