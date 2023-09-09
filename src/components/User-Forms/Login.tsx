@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import ResModal from './UserFormModal/ResModal';
+import { useNavigate } from 'react-router-dom';
+const { VITE_API_URL } = import.meta.env;
 
 const Login = ({ changeForm }: any) => {
   const [login, setLogin] = useState({ username: '', password: '' });
+  const [modal, setModal] = useState(false);
 
+  const instance = axios.create({
+    baseURL: VITE_API_URL,
+  });
+  const navigate = useNavigate();
   async function submitForm(e: any) {
     e.preventDefault();
-    console.log(login);
+    const res = await instance.post('/user/login-user', {
+      username: login.username,
+      clientpassword: login.password,
+    });
+    setModal(res.data.message);
+    setTimeout(() => {
+      setModal(false);
+    }, 1000);
   }
 
   function loginInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -17,7 +33,8 @@ const Login = ({ changeForm }: any) => {
   }
 
   return (
-    <div className='h-screen backgroundForm flex items-center justify-center'>
+    <div className='h-screen backgroundForm flex items-center justify-center flex-col'>
+      {modal !== false ? <ResModal responseMessage={modal} /> : ''}
       <div className='border border-white backdrop-blur-md bg-black bg-opacity-20 rounded-md w-80'>
         <h1 className='text-center mt-10 text-2xl text-white'>Login Here</h1>
         <form className='py-2' onSubmit={submitForm}>
@@ -54,10 +71,16 @@ const Login = ({ changeForm }: any) => {
               className='mt-10 text-xl cursor-pointer font-semibold text-white'
             />
             <p
-              className='mt-5 cursor-pointer font-semibold text-white'
+              className='mt-5 cursor-pointer font-semibold text-white text-center'
               onClick={changeForm}
             >
               Not A User? Register Here.
+            </p>
+            <p
+              className='mt-5 cursor-pointer font-semibold text-white text-center p-3'
+              onClick={() => navigate('/')}
+            >
+              Dont want to create an account? Click Here
             </p>
           </div>
         </form>
