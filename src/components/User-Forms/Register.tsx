@@ -1,13 +1,32 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+const { VITE_API_URL } = import.meta.env;
+import ResModal from './UserFormModal/ResModal';
+import { useNavigate } from 'react-router-dom';
 
 const Register = ({ changeForm }: any) => {
+  const instance = axios.create({
+    baseURL: VITE_API_URL,
+  });
   const [register, setRegister] = useState({
     username: '',
     password: '',
   });
+
+  const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
   async function submitRegForm(e: any) {
     e.preventDefault();
+    const res = await instance.post('/user/register-user', {
+      username: register.username,
+      password: register.password,
+    });
+    console.log(res);
     console.log(register);
+    setModal(res.data.message);
+    setTimeout(() => {
+      setModal(false);
+    }, 1000);
   }
 
   function loginRegInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -18,7 +37,8 @@ const Register = ({ changeForm }: any) => {
     }));
   }
   return (
-    <div className='h-screen backgroundForm flex items-center justify-center'>
+    <div className='h-screen backgroundForm flex items-center justify-center flex-col'>
+      {modal !== false ? <ResModal responseMessage={modal} /> : ''}
       <div className='border border-white backdrop-blur-md bg-black bg-opacity-20 rounded-md w-80'>
         <h1 className='text-center mt-10 text-2xl text-white'>Register Here</h1>
         <form className='py-2' onSubmit={submitRegForm}>
@@ -59,6 +79,12 @@ const Register = ({ changeForm }: any) => {
               onClick={changeForm}
             >
               Have An Account? Login Here.
+            </p>
+            <p
+              className='mt-5 cursor-pointer font-semibold text-white text-center p-3'
+              onClick={() => navigate('/')}
+            >
+              Dont want to create an account? Click Here
             </p>
           </div>
         </form>
