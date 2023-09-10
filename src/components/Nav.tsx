@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-function Nav() {
+function Nav({ clientUsername }: any) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const navClick = () => {
@@ -12,6 +13,11 @@ function Nav() {
 
   const toggleTransform = () => {
     setTransform(!isTransformed);
+  };
+
+  const logOut = () => {
+    Cookies.remove('UserjwtToken');
+    navigate('/LoginPage');
   };
 
   return (
@@ -38,7 +44,7 @@ function Nav() {
       {open && (
         <ul>
           <li className='mt-20 text-white font-bold text-xl text-center'>
-            {'Account goes here'}
+            {`Account: ${clientUsername}`}
           </li>
           <li
             className='mt-5 text-white text-center cursor-pointer'
@@ -57,6 +63,12 @@ function Nav() {
             onClick={() => navigate('/LoginPage')}
           >
             Login/Sign-Up
+          </li>
+          <li
+            className='mt-5 text-white text-center cursor-pointer'
+            onClick={logOut}
+          >
+            Log Out
           </li>
         </ul>
       )}
