@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ResModal from './UserFormModal/ResModal';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 const { VITE_API_URL } = import.meta.env;
 
 const Login = ({ changeForm }: any) => {
@@ -12,6 +13,7 @@ const Login = ({ changeForm }: any) => {
     baseURL: VITE_API_URL,
   });
   const navigate = useNavigate();
+
   async function submitForm(e: any) {
     e.preventDefault();
     const res = await instance.post('/user/login-user', {
@@ -22,6 +24,12 @@ const Login = ({ changeForm }: any) => {
     setTimeout(() => {
       setModal(false);
     }, 1000);
+    Cookies.set('UserjwtToken', res.data.token);
+    if (res.data.message === 'Correct Details') {
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    } else return;
   }
 
   function loginInput(e: React.ChangeEvent<HTMLInputElement>) {

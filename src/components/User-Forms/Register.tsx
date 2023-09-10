@@ -75,7 +75,7 @@ const Register = ({ changeForm }: any) => {
               className='mt-10 text-xl cursor-pointer font-semibold text-white'
             />
             <p
-              className='mt-5 cursor-pointer font-semibold text-white'
+              className='mt-5 cursor-pointer font-semibold text-white text-center'
               onClick={changeForm}
             >
               Have An Account? Login Here.
