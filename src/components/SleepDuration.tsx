@@ -1,10 +1,16 @@
 import React from 'react';
+import { LineChart, Line, YAxis, XAxis } from 'recharts';
 
-const SleepDuration = () => {
+const SleepDuration = ({ prevData }: any) => {
   return (
-    <div>
-      <p>Sleep Duration</p>
-    </div>
+    <>
+      <p className='text-center text-2xl font-bold'>Sleep Duration</p>
+      <LineChart width={400} height={400} data={prevData}>
+        <Line type='monotone' dataKey='sleepingHours' stroke='#8884d8' />
+        <YAxis />
+        <XAxis dataKey='day' />
+      </LineChart>
+    </>
   );
 };
 
