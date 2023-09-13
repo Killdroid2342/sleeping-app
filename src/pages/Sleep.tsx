@@ -4,11 +4,19 @@ import '../index.css';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
+import SleepDuration from '../components/SleepDuration';
+import SleepStats from '../components/SleepStats';
+type Result = {
+  sleepingHours: string;
+  timeOfSleep: string;
+  wakeUpTime: string;
+};
 
 const Main = () => {
   const [clientUsername, setClientUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [prevData, setPrevData] = useState<Result[]>([]);
 
   const username = () => {
     const getJWT = Cookies.get('UserjwtToken');
@@ -48,10 +56,21 @@ const Main = () => {
           className='text-white border border-white p-3 rounded-2xl font-bold text-xl mt-10'
           onClick={openModal}
         />
-        {isModalOpen && <Modal close={close} isLoggedIn={isLoggedIn} />}
+        {isModalOpen && (
+          <Modal
+            close={close}
+            isLoggedIn={isLoggedIn}
+            prevData={prevData}
+            setPrevData={setPrevData}
+          />
+        )}
         <div className='flex flex-row justify-center border border-white mt-80'>
-          <div className='border border-red-950 text-white'>Sleep Duration</div>
-          <div className='border border-blue-950 text-white'>Sleep Stats</div>
+          <div className='border border-red-950 text-white'>
+            <SleepDuration prevData={prevData} />
+          </div>
+          <div className='border border-blue-950 text-white'>
+            <SleepStats prevData={prevData} />
+          </div>
         </div>
       </div>
     </div>
