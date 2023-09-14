@@ -1,44 +1,46 @@
-import React from 'react';
-
-const SleepStats = ({ prevData }: any) => {
+const SleepStats = ({ prevData, isLoggedIn }: any) => {
   return (
-    <>
+    <div className='ml-10'>
       <p className='text-center text-2xl font-bold'>Sleep Stats</p>
-      <div className='flex flex-row'>
-        <ul className='border border-black'>
-          <li className='text-center'>Date</li>
-          {prevData.map((data: any, index: number) => (
-            <li key={index} className='text-center'>
-              {data.day}
-            </li>
-          ))}
-        </ul>
-        <ul className='border border-red-900'>
-          <li className='text-center'>Time Of Sleep</li>
-          {prevData.map((data: any, index: number) => (
-            <li key={index} className='text-center'>
-              {data.timeOfSleep}
-            </li>
-          ))}
-        </ul>
-        <ul className='border border-blue-900'>
-          <li className='text-center'>Wake Up Year</li>
-          {prevData.map((data: any, index: number) => (
-            <li key={index} className='text-center'>
-              {data.wakeUpTime}
-            </li>
-          ))}
-        </ul>
-        <ul className='border border-green-900'>
-          <li className='text-center'>Sleep Duration</li>
-          {prevData.map((data: any, index: number) => (
-            <li key={index} className='text-center'>
-              {data.sleepingHours}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+      {isLoggedIn ? (
+        <div className='flex flex-row'>
+          <ul>
+            <li className='text-center p-2 font-bold'>Date</li>
+            {prevData.map((data: any, index: number) => (
+              <li key={index} className='text-center'>
+                {data.date}
+              </li>
+            ))}
+          </ul>
+          <ul>
+            <li className='text-center p-2 font-bold'>Bed Time</li>
+            {prevData.map((data: any, index: number) => (
+              <li key={index} className='text-center'>
+                {data.bedtime}
+              </li>
+            ))}
+          </ul>
+          <ul>
+            <li className='text-center p-2 font-bold'>Wake Up Time</li>
+            {prevData.map((data: any, index: number) => (
+              <li key={index} className='text-center'>
+                {data.wakeUpTime}
+              </li>
+            ))}
+          </ul>
+          <ul>
+            <li className='text-center p-2 font-bold'>Hours Of Sleep</li>
+            {prevData.map((data: any, index: number) => (
+              <li key={index} className='text-center'>
+                {data.hoursofsleep}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p>log in to see data</p>
+      )}
+    </div>
   );
 };
 
