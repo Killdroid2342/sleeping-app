@@ -64,12 +64,12 @@ const Main = () => {
             setPrevData={setPrevData}
           />
         )}
-        <div className='flex flex-row justify-center border border-white mt-80'>
-          <div className='border border-red-950 text-white'>
-            <SleepDuration prevData={prevData} />
+        <div className='flex flex-row justify-center border border-white mt-56'>
+          <div className=' text-white border-r border-white'>
+            <SleepDuration prevData={prevData} isLoggedIn={isLoggedIn} />
           </div>
-          <div className='border border-blue-950 text-white'>
-            <SleepStats prevData={prevData} />
+          <div className=' text-white '>
+            <SleepStats prevData={prevData} isLoggedIn={isLoggedIn} />
           </div>
         </div>
       </div>

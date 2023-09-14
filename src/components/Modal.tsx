@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-const Modal = ({ close, isLoggedIn, prevData, setPrevData }: any) => {
+const Modal = ({ close, isLoggedIn, setPrevData }: any) => {
   const [data, setData] = useState({
-    sleepingHours: '',
-    timeOfSleep: '',
+    date: '',
+    bedtime: '',
     wakeUpTime: '',
-    day: '',
+    hoursofsleep: '',
   });
 
   async function submitForm(e: any) {
@@ -13,10 +13,10 @@ const Modal = ({ close, isLoggedIn, prevData, setPrevData }: any) => {
     const newResult = { ...data };
     setPrevData((setPrevData: any) => [...setPrevData, newResult]);
     setData({
-      sleepingHours: '',
-      timeOfSleep: '',
+      date: '',
+      bedtime: '',
       wakeUpTime: '',
-      day: '',
+      hoursofsleep: '',
     });
   }
 
@@ -30,7 +30,7 @@ const Modal = ({ close, isLoggedIn, prevData, setPrevData }: any) => {
 
   return (
     <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-black z-50'>
-      <div className='bg-white p-4 rounded-lg overflow-hidden h-3/6'>
+      <div className='bg-white p-4 rounded-lg overflow-hidden'>
         <button
           className='mt-2 px-4 py-2 bg-gray-900 text-white rounded-lg'
           onClick={close}
@@ -39,27 +39,30 @@ const Modal = ({ close, isLoggedIn, prevData, setPrevData }: any) => {
         </button>
         <h2 className='text-2xl font-semibold mb-4'></h2>
         {isLoggedIn ? (
-          <form className='flex flex-col items-center ' onSubmit={submitForm}>
+          <form className='flex flex-col items-center' onSubmit={submitForm}>
+            <label className='font-bold'>Enter Date</label>
             <input
-              type='text'
-              placeholder='Enter Sleeping Hours'
-              className='text-black border border-black p-3 rounded-2xl font-bold text-xl focus:outline-none'
+              type='date'
+              placeholder='day'
+              className='text-black border border-black p-3 rounded-2xl font-bold text-xl focus:outline-none mb-3'
               onChange={loginInput}
-              name='sleepingHours'
-              value={data.sleepingHours}
+              name='date'
+              value={data.date}
               required
             />
+            <label className='font-bold'>Bed Time</label>
             <input
-              type='text'
-              placeholder='Enter Time Of Sleep'
-              className='text-black border border-black p-3 rounded-2xl font-bold text-xl focus:outline-none mt-3 mb-3'
+              type='time'
+              placeholder='Bed Time'
+              className='text-black border border-black p-3 rounded-2xl font-bold text-xl focus:outline-none mb-3'
               onChange={loginInput}
-              name='timeOfSleep'
-              value={data.timeOfSleep}
+              name='bedtime'
+              value={data.bedtime}
               required
             />
+            <label className='font-bold'>Wake Up Time</label>
             <input
-              type='text'
+              type='time'
               placeholder='Enter Wake Up Time'
               className='text-black border border-black p-3 rounded-2xl font-bold text-xl focus:outline-none mb-3'
               onChange={loginInput}
@@ -67,13 +70,14 @@ const Modal = ({ close, isLoggedIn, prevData, setPrevData }: any) => {
               value={data.wakeUpTime}
               required
             />
+            <label className='font-bold'>Enter Sleeping Hours</label>
             <input
-              type='date'
-              placeholder='day'
-              className='text-black border border-black p-3 rounded-2xl font-bold text-xl focus:outline-none'
+              type='number'
+              placeholder='Enter Sleeping Hours'
+              className='text-black border border-black p-3 rounded-2xl font-bold text-xl focus:outline-none mb-3'
               onChange={loginInput}
-              name='day'
-              value={data.day}
+              name='hoursofsleep'
+              value={data.hoursofsleep}
               required
             />
             <input
