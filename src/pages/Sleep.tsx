@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
 import SleepDuration from '../components/SleepDuration';
 import SleepStats from '../components/SleepStats';
+import { useNavigate } from 'react-router-dom';
+
 type Result = {
   sleepingHours: string;
   timeOfSleep: string;
@@ -17,6 +19,7 @@ const Main = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [prevData, setPrevData] = useState<Result[]>([]);
+  const navigate = useNavigate();
 
   const username = () => {
     const getJWT = Cookies.get('UserjwtToken');
@@ -64,14 +67,28 @@ const Main = () => {
             setPrevData={setPrevData}
           />
         )}
-        <div className='flex flex-row justify-center border border-white mt-56'>
-          <div className=' text-white border-r border-white'>
-            <SleepDuration prevData={prevData} isLoggedIn={isLoggedIn} />
+        {isLoggedIn ? (
+          <div className='flex flex-row justify-center border border-white mt-56'>
+            <div className=' text-white border-r border-white'>
+              <SleepDuration prevData={prevData} isLoggedIn={isLoggedIn} />
+            </div>
+            <div className='text-white'>
+              <SleepStats prevData={prevData} isLoggedIn={isLoggedIn} />
+            </div>
           </div>
-          <div className=' text-white '>
-            <SleepStats prevData={prevData} isLoggedIn={isLoggedIn} />
-          </div>
-        </div>
+        ) : (
+          <p className='text-white mt-80 text-3xl border border-white p-4 rounded-2xl '>
+            Log in
+            <a
+              className='cursor-pointer font-bold'
+              onClick={() => navigate('/LoginPage')}
+            >
+              {' '}
+              Here{' '}
+            </a>
+            To Show Sleep Data
+          </p>
+        )}
       </div>
     </div>
   );
