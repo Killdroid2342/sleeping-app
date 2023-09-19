@@ -7,10 +7,16 @@ const conn = mysql.createConnection({
   password: '',
   database: 'sleep-tracker',
 });
-const insertItems = (date, bedtime, wakeUpTime, hoursofsleep) => {
+const insertItems = (
+  date,
+  bedtime,
+  wakeUpTime,
+  hoursofsleep,
+  clientUsername
+) => {
   conn.query(
-    'INSERT INTO sleepdata (date, bedtime, wakeUpTime, hoursofsleep ) VALUES (?, ?, ?, ?)',
-    [date, bedtime, wakeUpTime, hoursofsleep]
+    'INSERT INTO sleepdata (date, bedtime, wakeUpTime, hoursofsleep, clientUsername ) VALUES (?, ?, ?, ?, ?)',
+    [date, bedtime, wakeUpTime, hoursofsleep, clientUsername]
   );
 };
 module.exports = {

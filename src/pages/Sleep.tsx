@@ -65,6 +65,7 @@ const Main = () => {
             isLoggedIn={isLoggedIn}
             prevData={prevData}
             setPrevData={setPrevData}
+            clientUsername={clientUsername}
           />
         )}
         {isLoggedIn ? (

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 const { VITE_API_URL } = import.meta.env;
 import axios from 'axios';
-const Modal = ({ close, isLoggedIn, setPrevData, prevData }: any) => {
+const Modal = ({
+  close,
+  isLoggedIn,
+  setPrevData,
+  prevData,
+  clientUsername,
+}: any) => {
   const [data, setData] = useState({
     date: '',
     bedtime: '',
@@ -24,6 +30,7 @@ const Modal = ({ close, isLoggedIn, setPrevData, prevData }: any) => {
       bedtime: data.bedtime,
       wakeUpTime: data.wakeUpTime,
       hoursofsleep: data.hoursofsleep,
+      clientUsername: clientUsername,
     });
     console.log(res);
   }
