@@ -20,7 +20,7 @@ const Main = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [prevData, setPrevData] = useState<Result[]>([]);
   const navigate = useNavigate();
-
+  console.log(prevData);
   const username = () => {
     const getJWT = Cookies.get('UserjwtToken');
     if (getJWT) {
@@ -83,8 +83,7 @@ const Main = () => {
               className='cursor-pointer font-bold'
               onClick={() => navigate('/LoginPage')}
             >
-              {' '}
-              Here{' '}
+              {' Here '}
             </a>
             To Show Sleep Data
           </p>
