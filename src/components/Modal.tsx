@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
-const Modal = ({ close, isLoggedIn, setPrevData }: any) => {
+const { VITE_API_URL } = import.meta.env;
+import axios from 'axios';
+const Modal = ({ close, isLoggedIn, setPrevData, prevData }: any) => {
   const [data, setData] = useState({
     date: '',
     bedtime: '',
@@ -8,16 +9,23 @@ const Modal = ({ close, isLoggedIn, setPrevData }: any) => {
     hoursofsleep: '',
   });
 
+  const instance = axios.create({
+    baseURL: VITE_API_URL,
+  });
   async function submitForm(e: any) {
     e.preventDefault();
+
     const newResult = { ...data };
     setPrevData((setPrevData: any) => [...setPrevData, newResult]);
-    setData({
-      date: '',
-      bedtime: '',
-      wakeUpTime: '',
-      hoursofsleep: '',
+    console.log(prevData);
+
+    const res = await instance.post('/sleepData/addToDatabase', {
+      date: data.date,
+      bedtime: data.bedtime,
+      wakeUpTime: data.wakeUpTime,
+      hoursofsleep: data.hoursofsleep,
     });
+    console.log(res);
   }
 
   function loginInput(e: React.ChangeEvent<HTMLInputElement>) {
