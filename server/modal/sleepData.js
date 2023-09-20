@@ -19,6 +19,16 @@ const insertItems = (
     [date, bedtime, wakeUpTime, hoursofsleep, clientUsername]
   );
 };
+const getSleepData = async () => {
+  const res = conn
+    .promise()
+    .query('SELECT * from sleepdata')
+    .then(([rows, fields]) => {
+      return rows;
+    });
+  return res;
+};
 module.exports = {
   insertItems,
+  getSleepData,
 };
