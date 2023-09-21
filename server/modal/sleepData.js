@@ -28,7 +28,18 @@ const getSleepData = async () => {
     });
   return res;
 };
+
+const deleteSleepData = () => {
+  const res = conn
+    .promise()
+    .query('DELETE * from sleepdata')
+    .then(([rows, fields]) => {
+      return rows;
+    });
+  return res;
+};
 module.exports = {
   insertItems,
   getSleepData,
+  deleteSleepData,
 };

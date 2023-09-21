@@ -3,7 +3,11 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const { insertItems, getSleepData } = require('../modal/sleepData');
+const {
+  insertItems,
+  getSleepData,
+  deleteSleepData,
+} = require('../modal/sleepData');
 
 router.use(bodyParser.json());
 
@@ -20,4 +24,5 @@ router.get('/getSleepData', async (req, res) => {
   const totalItems = await getSleepData();
   res.send(JSON.stringify(totalItems));
 });
+// router.post('/deleteSleepData')
 module.exports = router;
