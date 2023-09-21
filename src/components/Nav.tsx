@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+const { VITE_API_URL } = import.meta.env;
+import axios from 'axios';
 
 function Nav({ clientUsername }: any) {
+  const instance = axios.create({
+    baseURL: VITE_API_URL,
+  });
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const navClick = () => {
@@ -20,6 +25,14 @@ function Nav({ clientUsername }: any) {
     navigate('/LoginPage');
   };
 
+  async function deleteAccount() {
+    const res = await instance.post('user/delete-user', {
+      clientUsername: clientUsername,
+    });
+    console.log(res);
+    Cookies.remove('UserjwtToken');
+    navigate('/LoginPage');
+  }
   return (
     <div
       className={`fixed top-0 left-0 h-full w-0 bg-stone-900 text-white transition-all transform ease-in-out duration-300 ${
@@ -69,6 +82,12 @@ function Nav({ clientUsername }: any) {
             onClick={logOut}
           >
             Log Out
+          </li>
+          <li
+            className='mt-5 text-white text-center cursor-pointer'
+            onClick={deleteAccount}
+          >
+            Delete Account
           </li>
         </ul>
       )}
