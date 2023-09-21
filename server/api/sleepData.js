@@ -3,7 +3,11 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const { insertItems, getSleepData } = require('../modal/sleepData');
+const {
+  insertItems,
+  getSleepData,
+  deleteSleepData,
+} = require('../modal/sleepData');
 
 router.use(bodyParser.json());
 
@@ -19,10 +23,21 @@ router.post('/addToDatabase', async (req, res) => {
 
 router.post('/getSleepData', async (req, res) => {
   const { clientUsername } = req.body;
-  console.log(clientUsername);
+  // console.log(clientUsername);
   const results = await getSleepData(clientUsername);
-  console.log(results);
+  // console.log(results);
   res.send(results);
+});
+router.post('/deleteSleepData', async (req, res) => {
+  const { clientUsername } = req.body;
+  console.log(clientUsername);
+  try {
+    deleteSleepData(clientUsername);
+    res.send('Data Deleted');
+  } catch (e) {
+    console.log(e);
+    res.send('error deleting data');
+  }
 });
 
 module.exports = router;
