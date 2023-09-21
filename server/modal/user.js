@@ -35,9 +35,13 @@ const isUserExists = async (username) => {
 async function comparePassswords(passwords, hash) {
   return bcrypt.compareSync(passwords, hash);
 }
+const deleteUser = async (clientUsername) => {
+  conn.query('DELETE FROM users WHERE username = ?', [clientUsername]);
+};
 module.exports = {
   createUser,
   hashPassword,
   isUserExists,
   comparePassswords,
+  deleteUser,
 };
