@@ -7,13 +7,17 @@ import Modal from '../components/Modal';
 import SleepDuration from '../components/SleepDuration';
 import SleepStats from '../components/SleepStats';
 import { useNavigate } from 'react-router-dom';
+const { VITE_API_URL } = import.meta.env;
+import axios from 'axios';
 
 type Result = {
   sleepingHours: string;
   timeOfSleep: string;
   wakeUpTime: string;
 };
-
+const instance = axios.create({
+  baseURL: VITE_API_URL,
+});
 const Main = () => {
   const [clientUsername, setClientUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,9 +38,10 @@ const Main = () => {
     }
   };
 
-  useEffect(() => {
-    username();
-  });
+  async function getData() {
+    const res = await instance.get('sleepData/getSleepData');
+    setPrevData(res.data);
+  }
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -45,7 +50,15 @@ const Main = () => {
   const close = () => {
     setIsModalOpen(false);
   };
-
+  async function deleteData() {
+    const res = await instance.post('sleepData/deleteSleepData');
+    console.log(res);
+    console.log('u deleted data');
+  }
+  useEffect(() => {
+    username();
+    getData();
+  }, []);
   return (
     <div className='background h-screen'>
       <Nav clientUsername={clientUsername} />
@@ -53,12 +66,20 @@ const Main = () => {
         <h1 className='text-center text-3xl font-bold text-white'>
           Sleep Tracker
         </h1>
-        <input
-          type='button'
-          value='New Entry +'
-          className='text-white border border-white p-3 rounded-2xl font-bold text-xl mt-10'
-          onClick={openModal}
-        />
+        <form action=''>
+          <input
+            type='button'
+            value='New Entry +'
+            className='text-white border border-white p-3 rounded-2xl font-bold text-xl mt-10'
+            onClick={openModal}
+          />
+          <input
+            type='button'
+            value='Delete Data'
+            className='text-white border border-white p-3 rounded-2xl font-bold text-xl mt-10'
+            onClick={deleteData}
+          />
+        </form>
         {isModalOpen && (
           <Modal
             close={close}
