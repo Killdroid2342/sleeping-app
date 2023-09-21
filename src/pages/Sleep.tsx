@@ -38,11 +38,6 @@ const Main = () => {
     }
   };
 
-  async function getData() {
-    const res = await instance.get('sleepData/getSleepData');
-    setPrevData(res.data);
-  }
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -51,14 +46,28 @@ const Main = () => {
     setIsModalOpen(false);
   };
   async function deleteData() {
-    const res = await instance.post('sleepData/deleteSleepData');
+    const res = await instance.post('sleepData/deleteSleepData', {
+      clientUsername: clientUsername,
+    });
     console.log(res);
     console.log('u deleted data');
   }
+  async function getData() {
+    const res = await instance.post('sleepData/getSleepData', {
+      clientUsername: clientUsername,
+    });
+    setPrevData(res.data);
+  }
+
   useEffect(() => {
     username();
-    getData();
   }, []);
+
+  useEffect(() => {
+    if (clientUsername) {
+      getData();
+    }
+  }, [clientUsername]);
   return (
     <div className='background h-screen'>
       <Nav clientUsername={clientUsername} />
