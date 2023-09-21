@@ -28,7 +28,15 @@ const getSleepData = async (clientUsername) => {
   return rows;
 };
 
+const deleteSleepData = async (clientUsername) => {
+  const [rows, fields] = await conn
+    .promise()
+    .query('DELETE FROM sleepdata WHERE clientUsername = ?', [clientUsername]);
+  return rows;
+};
+
 module.exports = {
   insertItems,
   getSleepData,
+  deleteSleepData,
 };
