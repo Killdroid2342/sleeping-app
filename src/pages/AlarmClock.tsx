@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 
 const AlarmClock = () => {
@@ -49,7 +49,7 @@ const AlarmClock = () => {
       <h1 className='text-center text-white text-2xl font-bold'>Alarm Clock</h1>
       <div className='flex flex-col justify-center h-screen'>
         <div className='flex flex-col items-center'>
-          <h2 className='text-center text-white text-6xl mb-5'>{clockTime}</h2>
+          <p className='text-center text-white text-6xl mb-5'>{clockTime}</p>
           <input
             type='time'
             step='1'
