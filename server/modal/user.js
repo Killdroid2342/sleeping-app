@@ -1,28 +1,24 @@
-const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { getDbConn } = require('../util');
 require('dotenv').config();
 
-const conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'sleep-tracker',
-});
 const createUser = async (username, password) => {
-  conn.query('INSERT INTO users (username, password) VALUES (?,?)', [
-    username,
-    password,
-  ]);
+  const conn = getDbConn();
+  conn.query(
+    'INSERT INTO sleeptracker_users (username, password) VALUES (?,?)',
+    [username, password]
+  );
+  conn.end();
 };
 const hashPassword = async (password, saltRounds) => {
   const res = bcrypt.hashSync(password, saltRounds);
   return res;
 };
 const isUserExists = async (username) => {
+  const conn = getDbConn();
   const res = conn
     .promise()
-    .query('SELECT * FROM users WHERE username = ?', [username])
+    .query('SELECT * FROM sleeptracker_users WHERE username = ?', [username])
     .then(([rows, fields]) => {
       if (rows.length > 0) {
         return rows[0];
@@ -30,14 +26,18 @@ const isUserExists = async (username) => {
         return false;
       }
     });
+  conn.end();
   return res;
 };
 async function comparePassswords(passwords, hash) {
   return bcrypt.compareSync(passwords, hash);
 }
-const deleteUser = async (clientUsername) => {
-  conn.query('DELETE FROM users WHERE username = ?', [clientUsername]);
+const deleteUser = async (username) => {
+  const conn = getDbConn();
+  conn.query('DELETE FROM sleeptracker_users WHERE username = ?', [username]);
+  conn.end();
 };
+
 module.exports = {
   createUser,
   hashPassword,

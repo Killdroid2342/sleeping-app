@@ -1,12 +1,6 @@
-const mysql = require('mysql2');
+const { getDbConn } = require('../util');
 require('dotenv').config();
 
-const conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'sleep-tracker',
-});
 const insertItems = (
   date,
   bedtime,
@@ -14,24 +8,32 @@ const insertItems = (
   hoursofsleep,
   clientUsername
 ) => {
+  const conn = getDbConn();
   conn.query(
-    'INSERT INTO sleepdata (date, bedtime, wakeUpTime, hoursofsleep, clientUsername ) VALUES (?, ?, ?, ?, ?)',
+    'INSERT INTO sleeptracker_sleepdata (date, bedtime, wakeUpTime, hoursofsleep, clientUsername ) VALUES (?, ?, ?, ?, ?)',
     [date, bedtime, wakeUpTime, hoursofsleep, clientUsername]
   );
+  conn.end();
 };
 const getSleepData = async (clientUsername) => {
+  const conn = getDbConn();
   const [rows, fields] = await conn
     .promise()
-    .query('SELECT * FROM sleepdata WHERE clientUsername = ?', [
+    .query('SELECT * FROM sleeptracker_sleepdata WHERE clientUsername = ?', [
       clientUsername,
     ]);
+  conn.end();
   return rows;
 };
 
 const deleteSleepData = async (clientUsername) => {
+  const conn = getDbConn();
   const [rows, fields] = await conn
     .promise()
-    .query('DELETE FROM sleepdata WHERE clientUsername = ?', [clientUsername]);
+    .query('DELETE FROM sleeptracker_sleepdata WHERE clientUsername = ?', [
+      clientUsername,
+    ]);
+  conn.end();
   return rows;
 };
 
